@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qgao.springcloud.dao.UnionArticleImgDao">
+
+    <resultMap type="com.qgao.springcloud.entity.UnionArticleImg" id="UnionArticleImgMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="articleImgId" column="article_img_id" jdbcType="VARCHAR"/>
+        <result property="articleId" column="article_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="UnionArticleImgMap">
+        select
+        id, article_img_id, article_id
+        from qgao.union_article_img
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="UnionArticleImgMap">
+        select
+        id, article_img_id, article_id
+        from qgao.union_article_img
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="UnionArticleImgMap">
+        select
+        id, article_img_id, article_id
+        from qgao.union_article_img
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="articleImgId != null and articleImgId != ''">
+                and article_img_id = #{articleImgId}
+            </if>
+            <if test="articleId != null">
+                and article_id = #{articleId}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into qgao.union_article_img(article_img_id, article_id)
+        values (#{articleImgId}, #{articleId})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into qgao.union_article_img(article_img_id, article_id)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.articleImgId}, #{entity.articleId})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into qgao.union_article_img(article_img_id, article_id)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.articleImgId}, #{entity.articleId})
+        </foreach>
+        on duplicate key update
+        article_img_id = values(article_img_id) , article_id = values(article_id)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update qgao.union_article_img
+        <set>
+            <if test="articleImgId != null and articleImgId != ''">
+                article_img_id = #{articleImgId},
+            </if>
+            <if test="articleId != null">
+                article_id = #{articleId},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from qgao.union_article_img where id = #{id}
+    </delete>
+
+</mapper>
+

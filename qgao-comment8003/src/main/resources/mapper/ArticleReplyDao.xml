@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qgao.springcloud.dao.ArticleReplyDao">
+
+    <resultMap type="com.qgao.springcloud.entity.ArticleReply" id="ArticleReplyMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="replyContent" column="reply_content" jdbcType="VARCHAR"/>
+        <result property="replyGoodCount" column="reply_good_count" jdbcType="INTEGER"/>
+        <result property="replyBadCount" column="reply_bad_count" jdbcType="INTEGER"/>
+        <result property="replyTime" column="reply_time" jdbcType="TIMESTAMP"/>
+        <result property="replyIp" column="reply_ip" jdbcType="VARCHAR"/>
+        <result property="replyType" column="reply_type" jdbcType="VARCHAR"/>
+        <result property="replyId" column="reply_id" jdbcType="INTEGER"/>
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+        <result property="commentId" column="comment_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <insert id="insertSelective">
+        insert into qgao.article_reply
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="replyContent != null and replyContent != ''">
+                reply_content,
+            </if>
+            <if test="replyGoodCount != null">
+                reply_good_count,
+            </if>
+            <if test="replyBadCount != null">
+                reply_bad_count,
+            </if>
+            <if test="replyTime != null">
+                reply_time,
+            </if>
+            <if test="replyIp != null and replyIp != ''">
+                reply_ip,
+            </if>
+            <if test="replyType != null and replyType != ''">
+                reply_type,
+            </if>
+            <if test="replyId != null">
+                reply_id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="commentId != null">
+                comment_id,
+            </if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="replyContent != null and replyContent != ''">
+                #{replyContent},
+            </if>
+            <if test="replyGoodCount != null">
+                #{replyGoodCount},
+            </if>
+            <if test="replyBadCount != null">
+                #{replyBadCount},
+            </if>
+            <if test="replyTime != null">
+                #{replyTime},
+            </if>
+            <if test="replyIp != null and replyIp != ''">
+                #{replyIp},
+            </if>
+            <if test="replyType != null and replyType != ''">
+                #{replyType},
+            </if>
+            <if test="replyId != null">
+                #{replyId},
+            </if>
+            <if test="userId != null">
+                #{userId},
+            </if>
+            <if test="commentId != null">
+                #{commentId},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="getArticleReplyList" parameterType="java.util.Map" resultType="com.qgao.springcloud.dto.ArticleCommentSendDto">
+        select ar.id
+        ,ar.reply_content
+        ,ar.reply_time
+        ,ar.reply_good_count
+        ,ar.reply_bad_count
+        ,ar.reply_type
+        ,ar.reply_id
+
+        ,u.id as user_id
+        ,u.img as user_img
+        ,u.nickname as nickname
+
+        ,u.id as reply_user_id
+        ,u.img as reply_user_img
+        ,u.nickname as reply_nickname
+        from article_reply ar
+        left join article_reply ar1
+        on ar.id=ar1.reply_id
+        inner join "user" u
+        on ar.user_id=u.id and ar1.user_id=u.id
+        where ar.comment_id=#{commentId}
+        order by ar.reply_good_count DESC
+        limit #{offset},#{recordLimit}
+
+    </select>
+
+    <select id="queryReplyByCommentUserId" parameterType="java.util.Map">
+        SELECT count(id)
+        from article_reply ar
+        INNER JOIN article_comment ac
+        ON ac.id=ar.comment_id
+        WHERE ar.id = #{replyId} and ac.user_id=#{userId}
+    </select>
+
+    <select id="queryReplyByArticleUserId" parameterType="java.util.Map">
+        SELECT count(id)
+        from article_reply ar
+        INNER JOIN article_comment ac
+        ON ac.id=ar.comment_id
+        INNER JOIN article a
+        on a.id=ac.article_id
+        WHERE ar.id = #{replyId} and a.user_id=#{userId}
+    </select>
+
+
+    <!--                   以上才是实际用到的                    -->
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="ArticleReplyMap">
+        select
+        id, reply_content, reply_good_count, reply_bad_count, reply_time, reply_ip, reply_type, reply_id, user_id,
+        comment_id
+        from qgao.article_reply
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="ArticleReplyMap">
+        select
+        id, reply_content, reply_good_count, reply_bad_count, reply_time, reply_ip, reply_type, reply_id, user_id,
+        comment_id
+        from qgao.article_reply
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="ArticleReplyMap">
+        select
+        id, reply_content, reply_good_count, reply_bad_count, reply_time, reply_ip, reply_type, reply_id, user_id,
+        comment_id
+        from qgao.article_reply
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="replyContent != null and replyContent != ''">
+                and reply_content = #{replyContent}
+            </if>
+            <if test="replyGoodCount != null">
+                and reply_good_count = #{replyGoodCount}
+            </if>
+            <if test="replyBadCount != null">
+                and reply_bad_count = #{replyBadCount}
+            </if>
+            <if test="replyTime != null">
+                and reply_time = #{replyTime}
+            </if>
+            <if test="replyIp != null and replyIp != ''">
+                and reply_ip = #{replyIp}
+            </if>
+            <if test="replyType != null and replyType != ''">
+                and reply_type = #{replyType}
+            </if>
+            <if test="replyId != null">
+                and reply_id = #{replyId}
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="commentId != null">
+                and comment_id = #{commentId}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into qgao.article_reply(reply_content, reply_good_count, reply_bad_count, reply_time, reply_ip,
+        reply_type, reply_id, user_id, comment_id)
+        values (#{replyContent}, #{replyGoodCount}, #{replyBadCount}, #{replyTime}, #{replyIp}, #{replyType},
+        #{replyId}, #{userId}, #{commentId})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into qgao.article_reply(reply_content, reply_good_count, reply_bad_count, reply_time, reply_ip,
+        reply_type, reply_id, user_id, comment_id)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.replyContent}, #{entity.replyGoodCount}, #{entity.replyBadCount}, #{entity.replyTime},
+            #{entity.replyIp}, #{entity.replyType}, #{entity.replyId}, #{entity.userId}, #{entity.commentId})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into qgao.article_reply(reply_content, reply_good_count, reply_bad_count, reply_time, reply_ip,
+        reply_type, reply_id, user_id, comment_id)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.replyContent}, #{entity.replyGoodCount}, #{entity.replyBadCount}, #{entity.replyTime},
+            #{entity.replyIp}, #{entity.replyType}, #{entity.replyId}, #{entity.userId}, #{entity.commentId})
+        </foreach>
+        on duplicate key update
+        reply_content = values(reply_content) , reply_good_count = values(reply_good_count) , reply_bad_count =
+        values(reply_bad_count) , reply_time = values(reply_time) , reply_ip = values(reply_ip) , reply_type =
+        values(reply_type) , reply_id = values(reply_id) , user_id = values(user_id) , comment_id = values(comment_id)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update qgao.article_reply
+        <set>
+            <if test="replyContent != null and replyContent != ''">
+                reply_content = #{replyContent},
+            </if>
+            <if test="replyGoodCount != null">
+                reply_good_count = #{replyGoodCount},
+            </if>
+            <if test="replyBadCount != null">
+                reply_bad_count = #{replyBadCount},
+            </if>
+            <if test="replyTime != null">
+                reply_time = #{replyTime},
+            </if>
+            <if test="replyIp != null and replyIp != ''">
+                reply_ip = #{replyIp},
+            </if>
+            <if test="replyType != null and replyType != ''">
+                reply_type = #{replyType},
+            </if>
+            <if test="replyId != null">
+                reply_id = #{replyId},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="commentId != null">
+                comment_id = #{commentId},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from qgao.article_reply where id = #{id}
+    </delete>
+
+</mapper>
+

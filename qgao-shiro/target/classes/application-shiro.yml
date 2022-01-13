@@ -1,0 +1,9 @@
+#qgao.redis.host=127.0.0.1:6379
+#qgao.redis.expire=3600
+#qgao.redis.timeout=5000
+
+qgao:
+  redis:
+    host: 127.0.0.1:6379
+    expire: 3600
+    timeout: 5000

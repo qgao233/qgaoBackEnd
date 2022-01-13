@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qgao.springcloud.dao.UserDao">
+
+    <resultMap type="com.qgao.springcloud.entity.User" id="UserMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="nickname" column="nickname" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="loginTime" column="login_time" jdbcType="TIMESTAMP"/>
+        <result property="lastTime" column="last_time" jdbcType="TIMESTAMP"/>
+        <result property="registerTime" column="register_time" jdbcType="TIMESTAMP"/>
+        <result property="realname" column="realname" jdbcType="VARCHAR"/>
+        <result property="sex" column="sex" jdbcType="VARCHAR"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="birthday" column="birthday" jdbcType="TIMESTAMP"/>
+        <result property="address" column="address" jdbcType="VARCHAR"/>
+        <result property="education" column="education" jdbcType="VARCHAR"/>
+        <result property="major" column="major" jdbcType="VARCHAR"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="img" column="img" jdbcType="VARCHAR"/>
+        <result property="point" column="point" jdbcType="INTEGER"/>
+        <result property="levelId" column="level_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+
+    <select id="insertSelective">
+        insert into qgao.user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="nickname != null and nickname != ''">
+                 nickname,
+            </if>
+            <if test="email != null and email != ''">
+                 email,
+            </if>
+            <if test="password != null and password != ''">
+                 password,
+            </if>
+            <if test="loginTime != null">
+                 login_time,
+            </if>
+            <if test="lastTime != null">
+                 last_time,
+            </if>
+            <if test="registerTime != null">
+                 register_time,
+            </if>
+            <if test="realname != null and realname != ''">
+                 realname,
+            </if>
+            <if test="sex != null and sex != ''">
+                 sex,
+            </if>
+            <if test="phone != null and phone != ''">
+                 phone,
+            </if>
+            <if test="birthday != null">
+                 birthday,
+            </if>
+            <if test="address != null and address != ''">
+                 address,
+            </if>
+            <if test="education != null and education != ''">
+                 education,
+            </if>
+            <if test="major != null and major != ''">
+                 major,
+            </if>
+            <if test="description != null and description != ''">
+                 description,
+            </if>
+            <if test="updateTime != null">
+                 update_time,
+            </if>
+            <if test="img != null and img != ''">
+                 img,
+            </if>
+            <if test="point != null">
+                 point,
+            </if>
+            <if test="levelId != null">
+                 level_id,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="nickname != null and nickname != ''">
+                #{nickname},
+            </if>
+            <if test="email != null and email != ''">
+                #{email},
+            </if>
+            <if test="password != null and password != ''">
+                #{password},
+            </if>
+            <if test="loginTime != null">
+                #{loginTime},
+            </if>
+            <if test="lastTime != null">
+                #{lastTime},
+            </if>
+            <if test="registerTime != null">
+                #{registerTime},
+            </if>
+            <if test="realname != null and realname != ''">
+                #{realname},
+            </if>
+            <if test="sex != null and sex != ''">
+                #{sex},
+            </if>
+            <if test="phone != null and phone != ''">
+                #{phone},
+            </if>
+            <if test="birthday != null">
+                #{birthday},
+            </if>
+            <if test="address != null and address != ''">
+                #{address},
+            </if>
+            <if test="education != null and education != ''">
+                #{education},
+            </if>
+            <if test="major != null and major != ''">
+                #{major},
+            </if>
+            <if test="description != null and description != ''">
+                #{description},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime},
+            </if>
+            <if test="img != null and img != ''">
+                #{img},
+            </if>
+            <if test="point != null">
+                #{point},
+            </if>
+            <if test="levelId != null">
+                #{levelId},
+            </if>
+        </trim>
+    </select>
+
+    <update id="updateUser">
+        update qgao.user
+        <set>
+            <if test="nickname != null and nickname != ''">
+                nickname = #{nickname},
+            </if>
+            <if test="email != null and email != ''">
+                email = #{email},
+            </if>
+            <if test="password != null and password != ''">
+                password = #{password},
+            </if>
+            <if test="loginTime != null">
+                login_time = #{loginTime},
+            </if>
+            <if test="lastTime != null">
+                last_time = #{lastTime},
+            </if>
+            <if test="registerTime != null">
+                register_time = #{registerTime},
+            </if>
+            <if test="realname != null and realname != ''">
+                realname = #{realname},
+            </if>
+            <if test="sex != null and sex != ''">
+                sex = #{sex},
+            </if>
+            <if test="phone != null and phone != ''">
+                phone = #{phone},
+            </if>
+            <if test="birthday != null">
+                birthday = #{birthday},
+            </if>
+            <if test="address != null and address != ''">
+                address = #{address},
+            </if>
+            <if test="education != null and education != ''">
+                education = #{education},
+            </if>
+            <if test="major != null and major != ''">
+                major = #{major},
+            </if>
+            <if test="description != null and description != ''">
+                description = #{description},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="img != null and img != ''">
+                img = #{img},
+            </if>
+            <if test="point != null">
+                point = #{point},
+            </if>
+            <if test="levelId != null">
+                level_id = #{levelId},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--查询单个-->
+    <select id="queryUserDetailById" resultMap="UserMap">
+        select
+        id, nickname, email, password, login_time, last_time, register_time, realname, sex, phone, birthday, address,
+        education, major, description, update_time, img, point, level_id
+        from qgao.user
+        where id = #{userId}
+    </select>
+
+    <!--                        上面是实际用到的                            -->
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="UserMap">
+        select
+        id, nickname, email, password, login_time, last_time, register_time, realname, sex, phone, birthday, address,
+        education, major, description, update_time, img, point, level_id
+        from qgao.user
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="UserMap">
+        select
+        id, nickname, email, password, login_time, last_time, register_time, realname, sex, phone, birthday, address,
+        education, major, description, update_time, img, point, level_id
+        from qgao.user
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="UserMap">
+        select
+        id, nickname, email, password, login_time, last_time, register_time, realname, sex, phone, birthday, address,
+        education, major, description, update_time, img, point, level_id
+        from qgao.user
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="nickname != null and nickname != ''">
+                and nickname = #{nickname}
+            </if>
+            <if test="email != null and email != ''">
+                and email = #{email}
+            </if>
+            <if test="password != null and password != ''">
+                and password = #{password}
+            </if>
+            <if test="loginTime != null">
+                and login_time = #{loginTime}
+            </if>
+            <if test="lastTime != null">
+                and last_time = #{lastTime}
+            </if>
+            <if test="registerTime != null">
+                and register_time = #{registerTime}
+            </if>
+            <if test="realname != null and realname != ''">
+                and realname = #{realname}
+            </if>
+            <if test="sex != null and sex != ''">
+                and sex = #{sex}
+            </if>
+            <if test="phone != null and phone != ''">
+                and phone = #{phone}
+            </if>
+            <if test="birthday != null">
+                and birthday = #{birthday}
+            </if>
+            <if test="address != null and address != ''">
+                and address = #{address}
+            </if>
+            <if test="education != null and education != ''">
+                and education = #{education}
+            </if>
+            <if test="major != null and major != ''">
+                and major = #{major}
+            </if>
+            <if test="description != null and description != ''">
+                and description = #{description}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="img != null and img != ''">
+                and img = #{img}
+            </if>
+            <if test="point != null">
+                and point = #{point}
+            </if>
+            <if test="levelId != null">
+                and level_id = #{levelId}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into qgao.user(nickname, email, password, login_time, last_time, register_time, realname, sex, phone,
+        birthday, address, education, major, description, update_time, img, point, level_id)
+        values (#{nickname}, #{email}, #{password}, #{loginTime}, #{lastTime}, #{registerTime}, #{realname}, #{sex},
+        #{phone}, #{birthday}, #{address}, #{education}, #{major}, #{description}, #{updateTime}, #{img}, #{point},
+        #{levelId})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into qgao.user(nickname, email, password, login_time, last_time, register_time, realname, sex, phone,
+        birthday, address, education, major, description, update_time, img, point, level_id)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.nickname}, #{entity.email}, #{entity.password}, #{entity.loginTime}, #{entity.lastTime},
+            #{entity.registerTime}, #{entity.realname}, #{entity.sex}, #{entity.phone}, #{entity.birthday},
+            #{entity.address}, #{entity.education}, #{entity.major}, #{entity.description}, #{entity.updateTime},
+            #{entity.img}, #{entity.point}, #{entity.levelId})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into qgao.user(nickname, email, password, login_time, last_time, register_time, realname, sex, phone,
+        birthday, address, education, major, description, update_time, img, point, level_id)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.nickname}, #{entity.email}, #{entity.password}, #{entity.loginTime}, #{entity.lastTime},
+            #{entity.registerTime}, #{entity.realname}, #{entity.sex}, #{entity.phone}, #{entity.birthday},
+            #{entity.address}, #{entity.education}, #{entity.major}, #{entity.description}, #{entity.updateTime},
+            #{entity.img}, #{entity.point}, #{entity.levelId})
+        </foreach>
+        on duplicate key update
+        nickname = values(nickname) , email = values(email) , password = values(password) , login_time =
+        values(login_time) , last_time = values(last_time) , register_time = values(register_time) , realname =
+        values(realname) , sex = values(sex) , phone = values(phone) , birthday = values(birthday) , address =
+        values(address) , education = values(education) , major = values(major) , description = values(description) ,
+        update_time = values(update_time) , img = values(img) , point = values(point) , level_id = values(level_id)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update qgao.user
+        <set>
+            <if test="nickname != null and nickname != ''">
+                nickname = #{nickname},
+            </if>
+            <if test="email != null and email != ''">
+                email = #{email},
+            </if>
+            <if test="password != null and password != ''">
+                password = #{password},
+            </if>
+            <if test="loginTime != null">
+                login_time = #{loginTime},
+            </if>
+            <if test="lastTime != null">
+                last_time = #{lastTime},
+            </if>
+            <if test="registerTime != null">
+                register_time = #{registerTime},
+            </if>
+            <if test="realname != null and realname != ''">
+                realname = #{realname},
+            </if>
+            <if test="sex != null and sex != ''">
+                sex = #{sex},
+            </if>
+            <if test="phone != null and phone != ''">
+                phone = #{phone},
+            </if>
+            <if test="birthday != null">
+                birthday = #{birthday},
+            </if>
+            <if test="address != null and address != ''">
+                address = #{address},
+            </if>
+            <if test="education != null and education != ''">
+                education = #{education},
+            </if>
+            <if test="major != null and major != ''">
+                major = #{major},
+            </if>
+            <if test="description != null and description != ''">
+                description = #{description},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="img != null and img != ''">
+                img = #{img},
+            </if>
+            <if test="point != null">
+                point = #{point},
+            </if>
+            <if test="levelId != null">
+                level_id = #{levelId},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from qgao.user where id = #{id}
+    </delete>
+
+</mapper>
+

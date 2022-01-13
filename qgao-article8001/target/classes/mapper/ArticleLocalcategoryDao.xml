@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qgao.springcloud.dao.ArticleLocalcategoryDao">
+
+    <resultMap type="com.qgao.springcloud.entity.ArticleLocalcategory" id="ArticleLocalcategoryMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="localcategoryName" column="localcategory_name" jdbcType="VARCHAR"/>
+        <result property="articleCount" column="article_count" jdbcType="INTEGER"/>
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <insert id="insertSelective">
+        insert into qgao.article_localcategory
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="localcategoryName != null">
+                localcategory_name,
+            </if>
+            <if test="articleCount != null">
+                article_count,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="localcategoryName != null">
+                #{localcategoryName},
+            </if>
+            <if test="articleCount != null">
+                #{articleCount},
+            </if>
+            <if test="userId != null">
+                #{userId},
+            </if>
+        </trim>
+    </insert>
+
+    <!--通过主键删除-->
+    <delete id="deleteByIdAndUserId" parameterType="java.util.Map">
+        delete from qgao.article_localcategory
+        where id = #{id} and user_id=#{userId} and article_count=0
+    </delete>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update qgao.article_localcategory
+        <set>
+            <if test="localcategoryName != null and localcategoryName != ''">
+                localcategory_name = #{localcategoryName},
+            </if>
+            <if test="articleCount != null">
+                article_count = #{articleCount},
+            </if>
+
+        </set>
+        where id = #{id}
+        <if test="userId != null">
+            and user_id = #{userId}
+        </if>
+    </update>
+
+    <!--                         以上是实际用到的                           -->
+
+
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="ArticleLocalcategoryMap">
+        select
+        id, localcategory_name, article_count, user_id
+        from qgao.article_localcategory
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="ArticleLocalcategoryMap">
+        select
+        id, localcategory_name, article_count, user_id
+        from qgao.article_localcategory
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="ArticleLocalcategoryMap">
+        select
+        id, localcategory_name, article_count, user_id
+        from qgao.article_localcategory
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="localcategoryName != null and localcategoryName != ''">
+                and localcategory_name = #{localcategoryName}
+            </if>
+            <if test="articleCount != null">
+                and article_count = #{articleCount}
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into qgao.article_localcategory(localcategory_name, article_count, user_id)
+        values (#{localcategoryName}, #{articleCount}, #{userId})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into qgao.article_localcategory(localcategory_name, article_count, user_id)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.localcategoryName}, #{entity.articleCount}, #{entity.userId})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into qgao.article_localcategory(localcategory_name, article_count, user_id)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.localcategoryName}, #{entity.articleCount}, #{entity.userId})
+        </foreach>
+        on duplicate key update
+        localcategory_name = values(localcategory_name) , article_count = values(article_count) , user_id =
+        values(user_id)
+    </insert>
+
+
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from qgao.article_localcategory where id = #{id}
+    </delete>
+
+</mapper>
+

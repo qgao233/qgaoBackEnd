@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qgao.springcloud.dao.UserNotifyDao">
+
+    <resultMap type="com.qgao.springcloud.utils.entity.UserNotify" id="UserNotifyMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="notifyType" column="notify_type" jdbcType="VARCHAR"/>
+        <result property="notifyToUserId" column="notify_to_user_id" jdbcType="INTEGER"/>
+        <result property="notifyFromUserId" column="notify_from_user_id" jdbcType="INTEGER"/>
+        <result property="notifyContent" column="notify_content" jdbcType="VARCHAR"/>
+        <result property="notifyDate" column="notify_date" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <select id="queryByNotifyUserId" resultMap="UserNotifyMap">
+        select
+        id, notify_type, notify_to_user_id, notify_from_user_id, notify_content, notify_date
+        from qgao.user_notify
+        where notify_to_user_id=#{userId}
+    </select>
+
+    <insert id="insertBatchNotify">
+        insert into qgao.user_notify(notify_type, notify_to_user_id, notify_from_user_id, notify_content, notify_date)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.notifyType}, #{entity.notifyToUserId}, #{entity.notifyFromUserId}, #{entity.notifyContent},
+            #{entity.notifyDate})
+        </foreach>
+    </insert>
+
+    <!--                  上用                              -->
+
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="UserNotifyMap">
+        select
+        id, notify_type, notify_to_user_id, notify_from_user_id, notify_content, notify_date
+        from qgao.user_notify
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="UserNotifyMap">
+        select
+        id, notify_type, notify_to_user_id, notify_from_user_id, notify_content, notify_date
+        from qgao.user_notify
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="UserNotifyMap">
+        select
+        id, notify_type, notify_to_user_id, notify_from_user_id, notify_content, notify_date
+        from qgao.user_notify
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="notifyType != null and notifyType != ''">
+                and notify_type = #{notifyType}
+            </if>
+            <if test="notifyToUserId != null">
+                and notify_to_user_id = #{notifyToUserId}
+            </if>
+            <if test="notifyFromUserId != null">
+                and notify_from_user_id = #{notifyFromUserId}
+            </if>
+            <if test="notifyContent != null and notifyContent != ''">
+                and notify_content = #{notifyContent}
+            </if>
+            <if test="notifyDate != null">
+                and notify_date = #{notifyDate}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into qgao.user_notify(notify_type, notify_to_user_id, notify_from_user_id, notify_content, notify_date)
+        values (#{notifyType}, #{notifyToUserId}, #{notifyFromUserId}, #{notifyContent}, #{notifyDate})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into qgao.user_notify(notify_type, notify_to_user_id, notify_from_user_id, notify_content, notify_date)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.notifyType}, #{entity.notifyToUserId}, #{entity.notifyFromUserId}, #{entity.notifyContent},
+            #{entity.notifyDate})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into qgao.user_notify(notify_type, notify_to_user_id, notify_from_user_id, notify_content, notify_date)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.notifyType}, #{entity.notifyToUserId}, #{entity.notifyFromUserId}, #{entity.notifyContent},
+            #{entity.notifyDate})
+        </foreach>
+        on duplicate key update
+        notify_type = values(notify_type) , notify_to_user_id = values(notify_to_user_id) , notify_from_user_id =
+        values(notify_from_user_id) , notify_content = values(notify_content) , notify_date = values(notify_date)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update qgao.user_notify
+        <set>
+            <if test="notifyType != null and notifyType != ''">
+                notify_type = #{notifyType},
+            </if>
+            <if test="notifyToUserId != null">
+                notify_to_user_id = #{notifyToUserId},
+            </if>
+            <if test="notifyFromUserId != null">
+                notify_from_user_id = #{notifyFromUserId},
+            </if>
+            <if test="notifyContent != null and notifyContent != ''">
+                notify_content = #{notifyContent},
+            </if>
+            <if test="notifyDate != null">
+                notify_date = #{notifyDate},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from qgao.user_notify where id = #{id}
+    </delete>
+
+</mapper>
+

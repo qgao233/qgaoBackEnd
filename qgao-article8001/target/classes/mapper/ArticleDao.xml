@@ -1,0 +1,706 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qgao.springcloud.dao.ArticleDao">
+
+    <resultMap type="com.qgao.springcloud.entity.Article" id="ArticleMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="articleType" column="article_type" jdbcType="VARCHAR"/>
+        <result property="articleState" column="article_state" jdbcType="VARCHAR"/>
+        <result property="articleMode" column="article_mode" jdbcType="VARCHAR"/>
+        <result property="articleTop" column="article_top" jdbcType="VARCHAR"/>
+        <result property="articleAllowComment" column="article_allow_comment" jdbcType="VARCHAR"/>
+        <result property="articleTitle" column="article_title" jdbcType="VARCHAR"/>
+        <result property="articleContent" column="article_content" jdbcType="VARCHAR"/>
+        <result property="articleRefurl" column="article_refurl" jdbcType="VARCHAR"/>
+        <result property="articleTime" column="article_time" jdbcType="TIMESTAMP"/>
+        <result property="articleIp" column="article_ip" jdbcType="VARCHAR"/>
+        <result property="articleUpdateTime" column="article_update_time" jdbcType="TIMESTAMP"/>
+        <result property="articleDropTime" column="article_drop_time" jdbcType="TIMESTAMP"/>
+        <result property="articleViewCount" column="article_view_count" jdbcType="INTEGER"/>
+        <result property="articleGoodCount" column="article_good_count" jdbcType="INTEGER"/>
+        <result property="articleBadCount" column="article_bad_count" jdbcType="INTEGER"/>
+        <result property="articleCommentCount" column="article_comment_count" jdbcType="INTEGER"/>
+        <result property="articleStoreCount" column="article_store_count" jdbcType="INTEGER"/>
+        <result property="articleImg" column="article_img" jdbcType="VARCHAR"/>
+        <result property="articleRemark" column="article_remark" jdbcType="VARCHAR"/>
+        <result property="articleCategoryId" column="article_category_id" jdbcType="INTEGER"/>
+        <result property="articleLocalcategoryId" column="article_localcategory_id" jdbcType="INTEGER"/>
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+
+    <!--实际使用到的-->
+
+
+
+
+
+    <insert id="insertSelective">
+        insert into qgao.article
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="articleType != null and articleType != ''">
+                article_type,
+            </if>
+            <if test="articleState != null and articleState != ''">
+                article_state,
+            </if>
+            <if test="articleMode != null and articleMode != ''">
+                article_mode,
+            </if>
+            <if test="articleTop != null and articleTop != ''">
+                article_top,
+            </if>
+            <if test="articleAllowComment != null and articleAllowComment != ''">
+                article_allow_comment,
+            </if>
+            <if test="articleTitle != null and articleTitle != ''">
+                article_title,
+            </if>
+            <if test="articleContent != null and articleContent != ''">
+                article_content,
+            </if>
+            <if test="articleRefurl != null and articleRefurl != ''">
+                article_refurl,
+            </if>
+            <if test="articleTime != null">
+                article_time,
+            </if>
+            <if test="articleIp != null and articleIp != ''">
+                article_ip,
+            </if>
+            <if test="articleUpdateTime != null">
+                article_update_time,
+            </if>
+            <if test="articleDropTime != null">
+                article_drop_time,
+            </if>
+            <if test="articleViewCount != null">
+                article_view_count,
+            </if>
+            <if test="articleGoodCount != null">
+                article_good_count,
+            </if>
+            <if test="articleBadCount != null">
+                article_bad_count,
+            </if>
+            <if test="articleCommentCount != null">
+                article_comment_count,
+            </if>
+            <if test="articleStoreCount != null">
+                article_store_count,
+            </if>
+            <if test="articleImg != null and articleImg != ''">
+                article_img,
+            </if>
+            <if test="articleRemark != null and articleRemark != ''">
+                article_remark,
+            </if>
+            <if test="articleCategoryId != null">
+                article_category_id,
+            </if>
+            <if test="articleLocalcategoryId != null">
+                article_localcategory_id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="articleType != null and articleType != ''">
+                #{articleType},
+            </if>
+            <if test="articleState != null and articleState != ''">
+                #{articleState},
+            </if>
+            <if test="articleMode != null and articleMode != ''">
+                #{articleMode},
+            </if>
+            <if test="articleTop != null and articleTop != ''">
+                #{articleTop},
+            </if>
+            <if test="articleAllowComment != null and articleAllowComment != ''">
+                #{articleAllowComment},
+            </if>
+            <if test="articleTitle != null and articleTitle != ''">
+                #{articleTitle},
+            </if>
+            <if test="articleContent != null and articleContent != ''">
+                #{articleContent},
+            </if>
+            <if test="articleRefurl != null and articleRefurl != ''">
+                #{articleRefurl},
+            </if>
+            <if test="articleTime != null">
+                #{articleTime},
+            </if>
+            <if test="articleIp != null and articleIp != ''">
+                #{articleIp},
+            </if>
+            <if test="articleUpdateTime != null">
+                #{articleUpdateTime},
+            </if>
+            <if test="articleDropTime != null">
+                #{articleDropTime},
+            </if>
+            <if test="articleViewCount != null">
+                #{articleViewCount},
+            </if>
+            <if test="articleGoodCount != null">
+                #{articleGoodCount},
+            </if>
+            <if test="articleBadCount != null">
+                #{articleBadCount},
+            </if>
+            <if test="articleCommentCount != null">
+                #{articleCommentCount},
+            </if>
+            <if test="articleStoreCount != null">
+                #{articleStoreCount},
+            </if>
+            <if test="articleImg != null and articleImg != ''">
+                #{articleImg},
+            </if>
+            <if test="articleRemark != null and articleRemark != ''">
+                #{articleRemark},
+            </if>
+            <if test="articleCategoryId != null">
+                #{articleCategoryId},
+            </if>
+            <if test="articleLocalcategoryId != null">
+                #{articleLocalcategoryId},
+            </if>
+            <if test="userId != null">
+                #{userId},
+            </if>
+        </trim>
+    </insert>
+
+    <insert id="insertUnionArticleTag" parameterType="java.util.Map" keyProperty="id" useGeneratedKeys="true">
+        insert into union_article_tag (
+        article_id,tag_id
+        ) values
+        <foreach collection="tags" item="tag" separator=",">
+            (
+            #{articleId},
+            #{tag.id}
+            )
+        </foreach>
+
+    </insert>
+
+
+    <!--通过主键删除-->
+    <delete id="deleteByIdandUserId" parameterType="java.util.Map">
+        delete from qgao.article where id = #{id} and user_id = #{userId}
+    </delete>
+
+
+
+
+    <!--通过主键修改数据-->
+    <update id="updateArticle">
+        update qgao.article
+        <set>
+            <if test="articleType != null and articleType != ''">
+                article_type = #{articleType},
+            </if>
+            <if test="articleState != null and articleState != ''">
+                article_state = #{articleState},
+            </if>
+            <if test="articleMode != null and articleMode != ''">
+                article_mode = #{articleMode},
+            </if>
+            <if test="articleTop != null and articleTop != ''">
+                article_top = #{articleTop},
+            </if>
+            <if test="articleAllowComment != null and articleAllowComment != ''">
+                article_allow_comment = #{articleAllowComment},
+            </if>
+            <if test="articleTitle != null and articleTitle != ''">
+                article_title = #{articleTitle},
+            </if>
+            <if test="articleContent != null and articleContent != ''">
+                article_content = #{articleContent},
+            </if>
+            <if test="articleRefurl != null and articleRefurl != ''">
+                article_refurl = #{articleRefurl},
+            </if>
+            <if test="articleTime != null">
+                article_time = #{articleTime},
+            </if>
+            <if test="articleIp != null and articleIp != ''">
+                article_ip = #{articleIp},
+            </if>
+            <if test="articleUpdateTime != null">
+                article_update_time = #{articleUpdateTime},
+            </if>
+            <if test="articleDropTime != null">
+                article_drop_time = #{articleDropTime},
+            </if>
+            <if test="articleViewCount != null">
+                article_view_count = #{articleViewCount},
+            </if>
+            <if test="articleGoodCount != null">
+                article_good_count = #{articleGoodCount},
+            </if>
+            <if test="articleBadCount != null">
+                article_bad_count = #{articleBadCount},
+            </if>
+            <if test="articleCommentCount != null">
+                article_comment_count = #{articleCommentCount},
+            </if>
+            <if test="articleStoreCount != null">
+                article_store_count = #{articleStoreCount},
+            </if>
+            <if test="articleImg != null and articleImg != ''">
+                article_img = #{articleImg},
+            </if>
+            <if test="articleRemark != null and articleRemark != ''">
+                article_remark = #{articleRemark},
+            </if>
+            <if test="articleCategoryId != null">
+                article_category_id = #{articleCategoryId},
+            </if>
+            <if test="articleLocalcategoryId != null">
+                article_localcategory_id = #{articleLocalcategoryId},
+            </if>
+        </set>
+        where id = #{id}
+        <if test="userId != null">
+            and user_id = #{userId}
+        </if>
+    </update>
+
+    <select id="queryArticleDetail" parameterType="Article" resultType="com.qgao.springcloud.dto.ArticleSendDto">
+        select a.id as articleId
+        ,a.article_title as articleTitle
+        ,a.article_type as articleType
+        ,a.article_state as articleState
+        ,a.article_time as articleTime
+        ,a.article_content as articleContent
+        ,a.article_refurl as articleRefurl
+        ,a.article_view_count as articleViewCount
+        ,a.article_good_count as articleGoodCount
+        ,a.article_bad_count as articleBadCount
+        ,a.article_store_count as articleStoreCount
+        ,a.article_comment_count as articleCommentCount
+        ,ac.id as categoryId, ac.category_name as categoryName
+        <if test="userId != null">
+            ,al.id as localcategoryId, al.localcategory_name as localcategoryName
+        </if>
+        ,u.id as userId,u.img as userImg,u.nickname as nickname
+        ,GROUP_CONCAT(`at`.id) as tagIds
+        ,GROUP_CONCAT(`at`.tag_name) as tagNames
+        from article a
+        inner join article_category ac
+        on ac.id=a.article_category_id
+        <if test="userId != null">
+            inner join article_localcategory al
+            on al.id=a.article_localcategory_id
+        </if>
+        inner join `user` u
+        on a.user_id=u.id
+        inner join union_article_tag uat
+        on uat.article_id=a.id
+        INNER JOIN article_tag `at`
+        on `at`.id=uat.tag_id
+        where 1=1
+        and a.id=#{id}
+        <if test="articleState != null">
+            and a.article_state=#{articleState}
+        </if>
+        <if test="userId != null">
+            and a.user_id = #{userId}
+        </if>
+
+    </select>
+
+    <select id="queryArticleList" parameterType="java.util.Map" resultType="com.qgao.springcloud.dto.ArticleSendDto">
+        select a.id as articleId
+        ,a.article_title as articleTitle
+        ,a.article_type as articleType
+        ,a.article_state as articleState
+        ,a.article_time as articleTime
+        ,a.article_img as articleImg
+        ,a.article_remark as articleRemark
+        ,a.article_view_count as articleViewCount
+        ,a.article_good_count as articleGoodCount
+        ,a.article_store_count as articleStoreCount
+        ,a.article_comment_count as articleCommentCount
+        ,ac.id as categoryId, ac.category_name as categoryName
+        ,u.id as userId,u.img as userImg,u.nickname as nickname
+        ,GROUP_CONCAT(`at`.id) as tagIds
+        ,GROUP_CONCAT(`at`.tag_name) as tagNames
+        from article a
+        inner join article_category ac
+        on ac.id=a.article_category_id
+        inner join `user` u
+        on a.user_id=u.id
+        inner join union_article_tag uat
+        on uat.article_id=a.id
+        INNER JOIN article_tag `at`
+        on `at`.id=uat.tag_id
+        where 1=1
+        <if test="userId != null">
+            and a.user_id = #{userId}
+        </if>
+        <if test="articleState != null">
+            and a.article_state=#{articleState}
+        </if>
+        <if test="categoryId != null">
+            and a.id in (select id from article
+            where article_category_id=#{categoryId})
+        </if>
+        group by a.id
+        order by a.${orderKey} DESC
+        limit #{offset},#{recordLimits}
+    </select>
+
+    <select id="userQueryArticleList" parameterType="java.util.Map" resultType="com.qgao.springcloud.dto.ArticleSendDto">
+        select a.id as articleId
+        ,a.article_title as articleTitle
+        ,a.article_type as articleType
+        ,a.article_state as articleState
+        ,a.article_time as articleTime
+        ,a.article_img as articleImg
+        ,a.article_remark as articleRemark
+        ,a.article_view_count as articleViewCount
+        ,a.article_good_count as articleGoodCount
+        ,a.article_bad_count as articleBadCount
+        ,a.article_store_count as articleStoreCount
+        ,a.article_comment_count as articleCommentCount
+        ,ac.id as categoryId, ac.category_name as categoryName
+        ,u.id as userId,u.img as userImg,u.nickname as nickname
+        ,GROUP_CONCAT(`at`.id) as tagIds
+        ,GROUP_CONCAT(`at`.tag_name) as tagNames
+        from article a
+        inner join article_category ac
+        on ac.id=a.article_category_id
+        inner join `user` u
+        on a.user_id=u.id
+        inner join union_article_tag uat
+        on uat.article_id=a.id
+        INNER JOIN article_tag `at`
+        on `at`.id=uat.tag_id
+        where 1=1
+        <if test="articleState != null">
+            and a.article_state=#{articleState}
+        </if>
+        <if test="userId != null">
+            and a.user_id = #{userId}
+        </if>
+        <if test="localcategoryId != null">
+            and a.id in (select id from article
+            where article_localcategory_id=#{localcategoryId})
+        </if>
+        group by a.id
+        order by a.${orderKey} DESC
+        limit #{offset},#{recordLimits}
+    </select>
+
+    <select id="queryArticleListBySearch" parameterType="java.util.Map" resultType="com.qgao.springcloud.dto.ArticleSendDto">
+        select a.id as articleId
+        ,a.article_title as articleTitle
+        ,a.article_type as articleType
+        ,a.article_state as articleState
+        ,a.article_time as articleTime
+        ,a.article_img as articleImg
+        ,a.article_remark as articleRemark
+        ,a.article_view_count as articleViewCount
+        ,a.article_good_count as articleGoodCount
+        ,a.article_store_count as articleStoreCount
+        ,a.article_comment_count as articleCommentCount
+        ,ac.id as categoryId, ac.category_name as categoryName
+        ,u.id as userId,u.img as userImg,u.nickname as nickname
+        ,GROUP_CONCAT(`at`.id) as tagIds
+        ,GROUP_CONCAT(`at`.tag_name) as tagNames
+        from article a
+        inner join article_category ac
+        on ac.id=a.article_category_id
+        inner join `user` u
+        on a.user_id=u.id
+        inner join union_article_tag uat
+        on uat.article_id=a.id
+        INNER JOIN article_tag `at`
+        on `at`.id=uat.tag_id
+        where 1=1
+        <if test="articleState != null">
+            and a.article_state=#{articleState}
+        </if>
+        <if test="categoryId != null">
+            and a.id in (select id from article
+            where article_category_id=#{categoryId})
+        </if>
+        <if test="searchKey != null">
+            and a.article_title LIKE concat(concat('%',#{searchKey}),'%')
+            OR `at`.tag_name LIKE concat(concat('%',#{searchKey}),'%')
+        </if>
+        group by a.id
+        order by a.${orderKey} DESC
+        limit #{offset},#{recordLimits}
+    </select>
+
+    <select id="queryRankOrder" parameterType="java.util.Map" resultType="com.qgao.springcloud.dto.ArticleSendDto">
+        SELECT id as articleId
+        ,article_title as articleTitle
+        ,${orderKey} as ${orderValue}
+        from article
+        where 1=1
+        <if test="articleState != null">
+            and article_state=#{articleState}
+        </if>
+        order by ${orderKey} DESC
+        limit 0,#{recordLimits}
+    </select>
+
+    <!--                         以上是实际用到的                           -->
+
+
+
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="ArticleMap">
+        select
+        id, article_type, article_state, article_mode, article_top, article_allow_comment, article_title,
+        article_content, article_refurl, article_time, article_ip, article_update_time, article_drop_time,
+        article_view_count, article_good_count, article_bad_count, article_comment_count, article_store_count,
+        article_img, article_remark, article_category_id, article_localcategory_id, user_id
+        from qgao.article
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="ArticleMap">
+        select
+        id, article_type, article_state, article_mode, article_top, article_allow_comment, article_title,
+        article_content, article_refurl, article_time, article_ip, article_update_time, article_drop_time,
+        article_view_count, article_good_count, article_bad_count, article_comment_count, article_store_count,
+        article_img, article_remark, article_category_id, article_localcategory_id, user_id
+        from qgao.article
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="ArticleMap">
+        select
+        id, article_type, article_state, article_mode, article_top, article_allow_comment, article_title,
+        article_content, article_refurl, article_time, article_ip, article_update_time, article_drop_time,
+        article_view_count, article_good_count, article_bad_count, article_comment_count, article_store_count,
+        article_img, article_remark, article_category_id, article_localcategory_id, user_id
+        from qgao.article
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="articleType != null and articleType != ''">
+                and article_type = #{articleType}
+            </if>
+            <if test="articleState != null and articleState != ''">
+                and article_state = #{articleState}
+            </if>
+            <if test="articleMode != null and articleMode != ''">
+                and article_mode = #{articleMode}
+            </if>
+            <if test="articleTop != null and articleTop != ''">
+                and article_top = #{articleTop}
+            </if>
+            <if test="articleAllowComment != null and articleAllowComment != ''">
+                and article_allow_comment = #{articleAllowComment}
+            </if>
+            <if test="articleTitle != null and articleTitle != ''">
+                and article_title = #{articleTitle}
+            </if>
+            <if test="articleContent != null and articleContent != ''">
+                and article_content = #{articleContent}
+            </if>
+            <if test="articleRefurl != null and articleRefurl != ''">
+                and article_refurl = #{articleRefurl}
+            </if>
+            <if test="articleTime != null">
+                and article_time = #{articleTime}
+            </if>
+            <if test="articleIp != null and articleIp != ''">
+                and article_ip = #{articleIp}
+            </if>
+            <if test="articleUpdateTime != null">
+                and article_update_time = #{articleUpdateTime}
+            </if>
+            <if test="articleDropTime != null">
+                and article_drop_time = #{articleDropTime}
+            </if>
+            <if test="articleViewCount != null">
+                and article_view_count = #{articleViewCount}
+            </if>
+            <if test="articleGoodCount != null">
+                and article_good_count = #{articleGoodCount}
+            </if>
+            <if test="articleBadCount != null">
+                and article_bad_count = #{articleBadCount}
+            </if>
+            <if test="articleCommentCount != null">
+                and article_comment_count = #{articleCommentCount}
+            </if>
+            <if test="articleStoreCount != null">
+                and article_store_count = #{articleStoreCount}
+            </if>
+            <if test="articleImg != null and articleImg != ''">
+                and article_img = #{articleImg}
+            </if>
+            <if test="articleRemark != null and articleRemark != ''">
+                and article_remark = #{articleRemark}
+            </if>
+            <if test="articleCategoryId != null">
+                and article_category_id = #{articleCategoryId}
+            </if>
+            <if test="articleLocalcategoryId != null">
+                and article_localcategory_id = #{articleLocalcategoryId}
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into qgao.article(article_type, article_state, article_mode, article_top, article_allow_comment,
+        article_title, article_content, article_refurl, article_time, article_ip, article_update_time,
+        article_drop_time, article_view_count, article_good_count, article_bad_count, article_comment_count,
+        article_store_count, article_img, article_remark, article_category_id, article_localcategory_id, user_id)
+        values (#{articleType}, #{articleState}, #{articleMode}, #{articleTop}, #{articleAllowComment}, #{articleTitle},
+        #{articleContent}, #{articleRefurl}, #{articleTime}, #{articleIp}, #{articleUpdateTime}, #{articleDropTime},
+        #{articleViewCount}, #{articleGoodCount}, #{articleBadCount}, #{articleCommentCount}, #{articleStoreCount},
+        #{articleImg}, #{articleRemark}, #{articleCategoryId}, #{articleLocalcategoryId}, #{userId})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into qgao.article(article_type, article_state, article_mode, article_top, article_allow_comment,
+        article_title, article_content, article_refurl, article_time, article_ip, article_update_time,
+        article_drop_time, article_view_count, article_good_count, article_bad_count, article_comment_count,
+        article_store_count, article_img, article_remark, article_category_id, article_localcategory_id, user_id)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.articleType}, #{entity.articleState}, #{entity.articleMode}, #{entity.articleTop},
+            #{entity.articleAllowComment}, #{entity.articleTitle}, #{entity.articleContent}, #{entity.articleRefurl},
+            #{entity.articleTime}, #{entity.articleIp}, #{entity.articleUpdateTime}, #{entity.articleDropTime},
+            #{entity.articleViewCount}, #{entity.articleGoodCount}, #{entity.articleBadCount},
+            #{entity.articleCommentCount}, #{entity.articleStoreCount}, #{entity.articleImg}, #{entity.articleRemark},
+            #{entity.articleCategoryId}, #{entity.articleLocalcategoryId}, #{entity.userId})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into qgao.article(article_type, article_state, article_mode, article_top, article_allow_comment,
+        article_title, article_content, article_refurl, article_time, article_ip, article_update_time,
+        article_drop_time, article_view_count, article_good_count, article_bad_count, article_comment_count,
+        article_store_count, article_img, article_remark, article_category_id, article_localcategory_id, user_id)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.articleType}, #{entity.articleState}, #{entity.articleMode}, #{entity.articleTop},
+            #{entity.articleAllowComment}, #{entity.articleTitle}, #{entity.articleContent}, #{entity.articleRefurl},
+            #{entity.articleTime}, #{entity.articleIp}, #{entity.articleUpdateTime}, #{entity.articleDropTime},
+            #{entity.articleViewCount}, #{entity.articleGoodCount}, #{entity.articleBadCount},
+            #{entity.articleCommentCount}, #{entity.articleStoreCount}, #{entity.articleImg}, #{entity.articleRemark},
+            #{entity.articleCategoryId}, #{entity.articleLocalcategoryId}, #{entity.userId})
+        </foreach>
+        on duplicate key update
+        article_type = values(article_type) , article_state = values(article_state) , article_mode =
+        values(article_mode) , article_top = values(article_top) , article_allow_comment = values(article_allow_comment)
+        , article_title = values(article_title) , article_content = values(article_content) , article_refurl =
+        values(article_refurl) , article_time = values(article_time) , article_ip = values(article_ip) ,
+        article_update_time = values(article_update_time) , article_drop_time = values(article_drop_time) ,
+        article_view_count = values(article_view_count) , article_good_count = values(article_good_count) ,
+        article_bad_count = values(article_bad_count) , article_comment_count = values(article_comment_count) ,
+        article_store_count = values(article_store_count) , article_img = values(article_img) , article_remark =
+        values(article_remark) , article_category_id = values(article_category_id) , article_localcategory_id =
+        values(article_localcategory_id) , user_id = values(user_id)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update qgao.article
+        <set>
+            <if test="articleType != null and articleType != ''">
+                article_type = #{articleType},
+            </if>
+            <if test="articleState != null and articleState != ''">
+                article_state = #{articleState},
+            </if>
+            <if test="articleMode != null and articleMode != ''">
+                article_mode = #{articleMode},
+            </if>
+            <if test="articleTop != null and articleTop != ''">
+                article_top = #{articleTop},
+            </if>
+            <if test="articleAllowComment != null and articleAllowComment != ''">
+                article_allow_comment = #{articleAllowComment},
+            </if>
+            <if test="articleTitle != null and articleTitle != ''">
+                article_title = #{articleTitle},
+            </if>
+            <if test="articleContent != null and articleContent != ''">
+                article_content = #{articleContent},
+            </if>
+            <if test="articleRefurl != null and articleRefurl != ''">
+                article_refurl = #{articleRefurl},
+            </if>
+            <if test="articleTime != null">
+                article_time = #{articleTime},
+            </if>
+            <if test="articleIp != null and articleIp != ''">
+                article_ip = #{articleIp},
+            </if>
+            <if test="articleUpdateTime != null">
+                article_update_time = #{articleUpdateTime},
+            </if>
+            <if test="articleDropTime != null">
+                article_drop_time = #{articleDropTime},
+            </if>
+            <if test="articleViewCount != null">
+                article_view_count = #{articleViewCount},
+            </if>
+            <if test="articleGoodCount != null">
+                article_good_count = #{articleGoodCount},
+            </if>
+            <if test="articleBadCount != null">
+                article_bad_count = #{articleBadCount},
+            </if>
+            <if test="articleCommentCount != null">
+                article_comment_count = #{articleCommentCount},
+            </if>
+            <if test="articleStoreCount != null">
+                article_store_count = #{articleStoreCount},
+            </if>
+            <if test="articleImg != null and articleImg != ''">
+                article_img = #{articleImg},
+            </if>
+            <if test="articleRemark != null and articleRemark != ''">
+                article_remark = #{articleRemark},
+            </if>
+            <if test="articleCategoryId != null">
+                article_category_id = #{articleCategoryId},
+            </if>
+            <if test="articleLocalcategoryId != null">
+                article_localcategory_id = #{articleLocalcategoryId},
+            </if>
+        </set>
+        where id = #{id}
+        <if test="userId != null">
+            and user_id = #{userId}
+        </if>
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from qgao.article where id = #{id}
+    </delete>
+
+</mapper>
+

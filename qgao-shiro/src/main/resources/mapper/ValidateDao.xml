@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qgao.springcloud.shiro.dao.ValidateDao">
+
+    <resultMap type="com.qgao.springcloud.shiro.entity.User" id="UserMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="nickname" column="nickname" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="loginTime" column="login_time" jdbcType="TIMESTAMP"/>
+        <result property="lastTime" column="last_time" jdbcType="TIMESTAMP"/>
+        <result property="registerTime" column="register_time" jdbcType="TIMESTAMP"/>
+        <result property="realname" column="realname" jdbcType="VARCHAR"/>
+        <result property="sex" column="sex" jdbcType="VARCHAR"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="birthday" column="birthday" jdbcType="TIMESTAMP"/>
+        <result property="address" column="address" jdbcType="VARCHAR"/>
+        <result property="education" column="education" jdbcType="VARCHAR"/>
+        <result property="major" column="major" jdbcType="VARCHAR"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="img" column="img" jdbcType="VARCHAR"/>
+        <result property="point" column="point" jdbcType="INTEGER"/>
+        <result property="levelId" column="level_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+
+    <select id="queryUserLevel" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        select level_id
+        from "user" u
+        where id=#{userId}
+    </select>
+
+    <select id="queryUserPermission" parameterType="java.lang.Long" resultType="java.util.List">
+        select up.permission_name
+        from user_permission up
+        INNER JOIN union_level_permission ulp
+        on up.id=ulp.permission_id
+        where ulp.level_id <![CDATA[ <= ]]> #{level}
+    </select>
+
+
+    <!--                        上面是实际用到的                            -->
+
+
+
+</mapper>
+

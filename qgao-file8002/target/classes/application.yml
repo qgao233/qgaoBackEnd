@@ -1,0 +1,13 @@
+server:
+  port: 8002
+
+#lombok的日志打印级别
+logging:
+  level:
+    com.qgao.springcloud: "debug"
+
+article:
+  img:
+    url: "/static/article/img/get"
+    path: "D:/static/article/img/"
+    identifyKey: "articleImg"

@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qgao.springcloud.dao.ArticleCommentDao">
+
+    <resultMap type="com.qgao.springcloud.entity.ArticleComment" id="ArticleCommentMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="commentContent" column="comment_content" jdbcType="VARCHAR"/>
+        <result property="commentTime" column="comment_time" jdbcType="TIMESTAMP"/>
+        <result property="commentIp" column="comment_ip" jdbcType="VARCHAR"/>
+        <result property="commentType" column="comment_type" jdbcType="VARCHAR"/>
+        <result property="commentGoodCount" column="comment_good_count" jdbcType="INTEGER"/>
+        <result property="commentBadCount" column="comment_bad_count" jdbcType="INTEGER"/>
+        <result property="commentReplyCount" column="comment_reply_count" jdbcType="INTEGER"/>
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+        <result property="articleId" column="article_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <insert id="insertSelective" >
+        insert into qgao.article_comment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="commentContent != null and commentContent != ''">
+                comment_content,
+            </if>
+            <if test="commentTime != null">
+                comment_time,
+            </if>
+            <if test="commentIp != null and commentIp != ''">
+                comment_ip,
+            </if>
+            <if test="commentType != null and commentType != ''">
+                comment_type,
+            </if>
+            <if test="commentGoodCount != null">
+                comment_good_count,
+            </if>
+            <if test="commentBadCount != null">
+                comment_bad_count,
+            </if>
+            <if test="commentReplyCount != null">
+                comment_reply_count,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="articleId != null">
+                article_id,
+            </if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="commentContent != null and commentContent != ''">
+                #{commentContent},
+            </if>
+            <if test="commentTime != null">
+                #{commentTime},
+            </if>
+            <if test="commentIp != null and commentIp != ''">
+                #{commentIp},
+            </if>
+            <if test="commentType != null and commentType != ''">
+                #{commentType},
+            </if>
+            <if test="commentGoodCount != null">
+                #{commentGoodCount},
+            </if>
+            <if test="commentBadCount != null">
+                #{commentBadCount},
+            </if>
+            <if test="commentReplyCount != null">
+                #{commentReplyCount},
+            </if>
+            <if test="userId != null">
+                #{userId},
+            </if>
+            <if test="articleId != null">
+                #{articleId},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="queryCommentByArticleUserId" parameterType="java.util.Map">
+        select count(ac.id)
+        from article_comment ac
+        INNER join article a
+        on ac.article_id=a.id
+        where ac.id=#{commentId} and a.user_id=#{userId}
+    </select>
+
+
+    <select id="queryCommentCountsByType" parameterType="java.util.Map">
+        select count(id) from article_comment
+        WHERE comment_type=#{commentType}
+        <if test="articleId != null">
+            and ac.article_id=#{articleId}
+        </if>
+        <if test="userId != null">
+            and user_id=#{userId}
+        </if>
+    </select>
+
+    <select id="getArticleCommentList" parameterType="java.util.Map" resultType="com.qgao.springcloud.dto.ArticleCommentSendDto">
+        SELECT
+        ac.id as comment_id
+        ,ac.comment_content as comment_content
+        ,ac.comment_time as comment_time
+        ,ac.comment_good_count as comment_good_count
+        ,ac.comment_bad_count as comment_bad_count
+        ,ac.comment_reply_count as comment_reply_count
+        ,ac.user_id as user_id
+        ,u.img as user_img
+        ,u.nickname as nickname
+        from article_comment ac
+        INNER JOIN "user" u
+        on ac.user_id=u.id
+        WHERE ac.comment_type=#{commentType}
+        <if test="articleId != null">
+            and ac.article_id=#{articleId}
+        </if>
+        <if test="userId != null">
+            and ac.user_id=#{userId}
+        </if>
+        ORDER BY ${orderField} ${order}
+        limit #{offset},#{recordLimit}
+    </select>
+
+    <select id="queryRankOrder" parameterType="java.util.Map" resultType="com.qgao.springcloud.dto.ArticleCommentSendDto">
+        SELECT id as comment_id
+        ,comment_content as comment_content
+        ,${orderKey} as ${orderKey}
+        from article_comment
+        order by ${orderKey} DESC
+        limit 0,#{recordLimits}
+    </select>
+
+
+    <!--                      以上是实际用到的                        -->
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="ArticleCommentMap">
+        select
+        id, comment_content, comment_time, comment_ip, comment_type, comment_good_count, comment_bad_count,
+        comment_reply_count, user_id, article_id
+        from qgao.article_comment
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="ArticleCommentMap">
+        select
+        id, comment_content, comment_time, comment_ip, comment_type, comment_good_count, comment_bad_count,
+        comment_reply_count, user_id, article_id
+        from qgao.article_comment
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="ArticleCommentMap">
+        select
+        id, comment_content, comment_time, comment_ip, comment_type, comment_good_count, comment_bad_count,
+        comment_reply_count, user_id, article_id
+        from qgao.article_comment
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="commentContent != null and commentContent != ''">
+                and comment_content = #{commentContent}
+            </if>
+            <if test="commentTime != null">
+                and comment_time = #{commentTime}
+            </if>
+            <if test="commentIp != null and commentIp != ''">
+                and comment_ip = #{commentIp}
+            </if>
+            <if test="commentType != null and commentType != ''">
+                and comment_type = #{commentType}
+            </if>
+            <if test="commentGoodCount != null">
+                and comment_good_count = #{commentGoodCount}
+            </if>
+            <if test="commentBadCount != null">
+                and comment_bad_count = #{commentBadCount}
+            </if>
+            <if test="commentReplyCount != null">
+                and comment_reply_count = #{commentReplyCount}
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="articleId != null">
+                and article_id = #{articleId}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into qgao.article_comment(comment_content, comment_time, comment_ip, comment_type, comment_good_count,
+        comment_bad_count, comment_reply_count, user_id, article_id)
+        values (#{commentContent}, #{commentTime}, #{commentIp}, #{commentType}, #{commentGoodCount},
+        #{commentBadCount}, #{commentReplyCount}, #{userId}, #{articleId})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into qgao.article_comment(comment_content, comment_time, comment_ip, comment_type, comment_good_count,
+        comment_bad_count, comment_reply_count, user_id, article_id)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.commentContent}, #{entity.commentTime}, #{entity.commentIp}, #{entity.commentType},
+            #{entity.commentGoodCount}, #{entity.commentBadCount}, #{entity.commentReplyCount}, #{entity.userId},
+            #{entity.articleId})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into qgao.article_comment(comment_content, comment_time, comment_ip, comment_type, comment_good_count,
+        comment_bad_count, comment_reply_count, user_id, article_id)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.commentContent}, #{entity.commentTime}, #{entity.commentIp}, #{entity.commentType},
+            #{entity.commentGoodCount}, #{entity.commentBadCount}, #{entity.commentReplyCount}, #{entity.userId},
+            #{entity.articleId})
+        </foreach>
+        on duplicate key update
+        comment_content = values(comment_content) , comment_time = values(comment_time) , comment_ip =
+        values(comment_ip) , comment_type = values(comment_type) , comment_good_count = values(comment_good_count) ,
+        comment_bad_count = values(comment_bad_count) , comment_reply_count = values(comment_reply_count) , user_id =
+        values(user_id) , article_id = values(article_id)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update qgao.article_comment
+        <set>
+            <if test="commentContent != null and commentContent != ''">
+                comment_content = #{commentContent},
+            </if>
+            <if test="commentTime != null">
+                comment_time = #{commentTime},
+            </if>
+            <if test="commentIp != null and commentIp != ''">
+                comment_ip = #{commentIp},
+            </if>
+            <if test="commentType != null and commentType != ''">
+                comment_type = #{commentType},
+            </if>
+            <if test="commentGoodCount != null">
+                comment_good_count = #{commentGoodCount},
+            </if>
+            <if test="commentBadCount != null">
+                comment_bad_count = #{commentBadCount},
+            </if>
+            <if test="commentReplyCount != null">
+                comment_reply_count = #{commentReplyCount},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="articleId != null">
+                article_id = #{articleId},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from qgao.article_comment where id = #{id}
+    </delete>
+
+</mapper>
+

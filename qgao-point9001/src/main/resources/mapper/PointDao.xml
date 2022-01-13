@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qgao.springcloud.dao.PointDao">
+
+
+    <select id="queryUserLevelAndPoint" parameterType="java.lang.Long" resultType="com.qgao.springcloud.dto.LevelPointDto">
+        select level_id as "level",point
+        from qgao.user
+        where id=#{userId}
+    </select>
+
+    <select id="queryLevelPoint" resultType="com.qgao.springcloud.dto.LevelPointDto">
+        select id as "level", level_point as point
+        from qgao.user_level
+    </select>
+
+
+
+</mapper>
